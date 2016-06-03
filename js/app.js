@@ -31,11 +31,10 @@ jQuery(document).ready(function ($) {
         "-- erickjung.com --\n" +
         ">> Initializing system... [[[b;#44D544;]DONE]]\n" +
         ">> Detecting user ip... [[[b;#44D544;]DONE]]\n" +
-        ">> Logging as guest\n\n" +
+        ">> Logging as yo\n\n" +
         "Type [[b;#44D544;]help] to get a list of available commands.\n\n",
         prompt: function (p) {
-            var path = '~'
-            p(myip + ":" + path + "$ ");
+            p(myip + ":yo$ ");
         },
         onBlur: function () {
             return false;
