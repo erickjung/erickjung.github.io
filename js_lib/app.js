@@ -30,7 +30,7 @@ jQuery(document).ready(function ($) {
         "\n\n\n" +
         "-- erickjung.com --\n" +
         ">> Initializing system... [[[b;#44D544;]DONE]]\n" +
-        ">> Detecting user ip... [[[b;#44D544;]DONE]]\n" +
+        ">> Detecting user ip... [[[b;#44D544;]DONE]]\n\n" +
         ">> Logging as yo\n\n" +
         "Type [[b;#44D544;]help] to get a list of available commands.\n\n",
         prompt: function (p) {
@@ -39,6 +39,6 @@ jQuery(document).ready(function ($) {
         onBlur: function () {
             return false;
         },
-        tabcompletion: true
+        tabcompletion: false
     });
 });
