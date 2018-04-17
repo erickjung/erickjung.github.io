@@ -39,6 +39,6 @@ jQuery(document).ready(function ($) {
         onBlur: function () {
             return false;
         },
-        tabcompletion: false
+        tabcompletion: true,
     });
 });
