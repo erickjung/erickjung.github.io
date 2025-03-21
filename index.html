@@ -44,78 +44,375 @@
 
 </head>
 
-<body style="height: 100%;" class="night">
-  <div id="site">
-    <section class="intro">
-      <p> <img src="assets/e7g-mini.png" alt="car inspection" class="logo-image"/> </p>
-      <h2 class="intro__tagline">
-        Hello there,
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="assets/e7g-mini.png" alt="erickjung" class="logo-icon" />
+    </div>
+  </header>
 
-        <p>Are you looking for expert solutions to solve your tech challenges? With over 20 years of pushing boundaries and crafting innovative software solutions, we had the privilege of collaborating with top-tier companies like <b>Apple, Motorola, Dell, Samsung, and others</b>.</p>
-        <p>If you're looking for a reliable partner to bring fresh ideas and expertise to your project, let’s collaborate and achieve greatness together! We can assist you with:</p>
-        <ul>
-          <li><b>Mobile development</b> (iOS & Android - Native or Flutter)</li>
-          <li><b>Desktop applications</b> (Native or Flutter)</li>
-          <li><b>Backend services</b> (Dotnet, Go, Ruby, Python or PHP)</li>
-          <li><b>Research and prototyping</b></li>
-        </ul>
+  <main class="main">
+    <div class="chat-container">
+      <div class="chat-area" id="chat-area">
+        <!-- Chat messages will appear here -->
+      </div>
+      <div class="input-area">
+        <div class="input-box">
+          <textarea id="user-input" placeholder="Type your message..." rows="1"></textarea>
+          <button class="send-button" id="send-button">➤</button>
+        </div>
+        <div class="copyright">
+          © 2025 E7G - Erick Jung. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </main>
 
-        <p>Below, you’ll find a selection of exciting projects we have worked on recently, including ongoing endeavors that are not covered by NDA.</p>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const chatArea = document.getElementById('chat-area');
+      const userInput = document.getElementById('userInput');
+      const sendButton = document.getElementById('send-button');
 
-        <section class="portfolio portfolio--small">
-          <div class="portfolio__grid-wrapper">
-            <div class="portfolio__grid">
+      // Portfolio content
+      const portfolio = {
+        about: {
+          text: "For over 20 years, we’ve been solving tech challenges and building innovative software solutions. From startups to industry giants like Apple, Motorola, Dell, and Samsung, we’ve helped bring ideas to life with fresh thinking and technical expertise.</br></br>If you’re looking for a reliable partner to tackle your next big project, let’s make it happen together!",
+        },
+        services: [
+          {
+            title: "Mobile Development",
+            description: "Expert development for iOS and Android apps using Native or Flutter, tailored to your needs."
+          },
+          {
+            title: "Game Development",
+            description: "Creating engaging mobile and web games with smooth performance and immersive experiences."
+          },
+          {
+            title: "Desktop Applications",
+            description: "Building powerful and efficient desktop applications using Native or Flutter technologies."
+          },
+          {
+            title: "Backend Services",
+            description: "Robust and scalable backend solutions using Dotnet, Go, Ruby, Python, or PHP."
+          },
+          {
+            title: "Research & Prototyping",
+            description: "Exploring new technologies and rapid prototyping to validate ideas and drive innovation."
+          }
+        ],
+        projects: [
+          {
+            "title": "Criativei – Instagram Content Creator",
+            "icon": "assets/criativei_icon.jpg",
+            "description": "Criativei is the go-to app for crafting eye-catching Instagram stories, reels, and posts. With a vast library of static and animated stickers, customizable colors, and seamless Instagram integration, it empowers users to personalize their content effortlessly. Built with Flutter for a smooth cross-platform experience, Criativei makes creating stunning visuals easy and accessible.",
+            "weblink": "https://criativei.com",
+            "appstore": "https://apps.apple.com/app/criativei",
+            "playstore": "https://play.google.com/store/apps/details?id=com.criativei"
+          },
+          {
+            "title": "Moosti – Your Personal Productivity Companion",
+            "icon": "assets/moosti_icon.jpg",
+            "description": "Moosti is more than just a productivity app—it's your personal companion on the journey to a more focused, balanced, and fulfilling life. Using the Pomodoro Technique, mindfulness sessions, and AI-generated meditation, Moosti helps users minimize distractions, stay motivated, and enhance their focus. Available on iOS, macOS, Apple Watch, Vision Pro, and Web, it provides a seamless experience across devices, empowering millions worldwide to achieve their goals.",
+            "weblink": "https://moosti.com",
+            "appstore": "https://apps.apple.com/app/moosti"
+          },
+          {
+            "title": "Automated Driver's License Testing Platform",
+            "icon": "assets/automated_driver_icon.jpg",
+            "description": "This project involved building a comprehensive system to manage the entire driver's license testing process. With in-car monitoring using four strategically placed cameras, secure fingerprint authentication, and a real-time examiner tablet app, the platform enhances efficiency and security. A centralized control room provides real-time oversight of all tests, ensuring a seamless experience. Built on a unified .NET (C#) tech stack, the system enables secure communication, real-time monitoring, and streamlined test management.",
+            "youtube": "https://www.youtube.com/watch?v=xfPUTI-3dH8"
+          },
+          {
+            "title": "Wireless Vehicle Inspection Integration",
+            "icon": "assets/car_inspection_icon.jpg",
+            "description": "This project involved creating a solution to streamline the vehicle inspection process by integrating wireless digital cameras with the government's existing platform. The system automates image capture and transmission using wireless memory cards, improving inspection efficiency and data collection. The seamless integration and secure data transmission ensure faster, more reliable inspections, saving time and resources for both inspectors and government agencies."
+          }
+        ],
+        contact: {
+          email: "talk@erickjung.com",
+          phone: "+351 914914118",
+          address: "Braga, Portugal",
+        }
+      };
 
-              <a href="./portfolio/criativei.html" class="portfolio__link">
-                <div class="portfolio__item">
-                  <img src="assets/criativei_icon.jpg" alt="Criativei" class="portfolio__image">
-                  <div class="portfolio__info">
-                    <h3 class="portfolio__project-title">Criativei</h3>
+      // Initialize chat with greeting message
+      function initChat() {
+        setTimeout(() => {
+          addBotMessage("👋 Hello there! Are you looking for expert solutions to tackle your tech challenges? With over 20 years of experience crafting innovative software and collaborating with industry leaders like Apple, Motorola, Dell, and Samsung, we're here to bring fresh ideas and expertise to your project. Let’s collaborate and build something great together! How can we assist you today?");
+        }, 500);
+
+        setTimeout(() => {
+          addBotMessage("What would you like to know about us? You can select one of these options or type your question:", getMainOptions());
+        }, 1500);
+      }
+
+      // Get main menu options HTML
+      function getMainOptions() {
+        return `
+                <div class="content-block">
+                    <button class="option-button" onclick="handleOption('about')">About Us</button>
+                    <button class="option-button" onclick="handleOption('services')">Our Services</button>
+                    <button class="option-button" onclick="handleOption('projects')">Featured Projects</button>
+                    <button class="option-button" onclick="handleOption('contact')">Contact Information</button>
+                </div>`;
+      }
+
+      // Handle option selection
+      window.handleOption = function (option) {
+        addUserMessage(option.charAt(0).toUpperCase() + option.slice(1));
+
+        switch (option) {
+          case 'about':
+            showAbout();
+            break;
+          case 'services':
+            showServices();
+            break;
+          case 'projects':
+            showProjects();
+            break;
+          case 'contact':
+            showContact();
+            break;
+          default:
+            addBotMessage("I'm not sure what you're looking for. Can you please select from one of these options?", getMainOptions());
+        }
+      };
+
+      // Display about information
+      function showAbout() {
+        setTimeout(() => {
+          const aboutContent = `
+                    <div class="content-block">
+                        <br>
+                        <h3>About Us</h3>
+                        <p>${portfolio.about.text}</p>
+                    </div>
+                    
+                    <div class="content-block">
+                        <button class="option-button" onclick="handleOption('services')">Our Services</button>
+                        <button class="option-button" onclick="showMainMenu()">Main Menu</button>
+                    </div>`;
+
+          addBotMessage("Here's some information about E7G:", aboutContent);
+        }, 500);
+      }
+
+      // Display services information
+      function showServices() {
+        setTimeout(() => {
+          const servicesContent = `
+                    <div class="content-block">
+                        <br>
+                        <h3>Our Services</h3>
+                        <p>At E7G, we offer comprehensive technology solutions to meet your business needs:</p>
+                        
+                        ${portfolio.services.map(service => `
+                        <div class="service-card">
+                            <h4>${service.title}</h4>
+                            <p>${service.description}</p>
+                        </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="content-block">
+                        <button class="option-button" onclick="handleOption('projects')">See Our Projects</button>
+                        <button class="option-button" onclick="handleOption('contact')">Contact Us</button>
+                        <button class="option-button" onclick="showMainMenu()">Main Menu</button>
+                    </div>`;
+
+          addBotMessage("Here are the services E7G offers:", servicesContent);
+        }, 500);
+      }
+
+      // Display projects information
+      function showProjects() {
+        setTimeout(() => {
+          const projectsContent = `
+              <div class="content-block">
+                  <br>
+                  <h3>Featured Projects</h3>
+                  <p>Below, you'll find a selection of exciting projects we have worked on recently, including ongoing endeavors that are not covered by NDA:</p>
+                  
+                  ${portfolio.projects.map(project => `
+                  <div class="project-showcase">
+                      <img class="project-image" src="${project.icon}" alt="${project.title}">
+                      <h4>${project.title}</h4>
+                      <p>${project.description}</p>
+                      ${renderProjectLinks(project)}
                   </div>
-                </div>
-              </a>
+                  `).join('')}
+              </div>
+              
+              <div class="content-block">
+                  <button class="option-button" onclick="handleOption('contact')">Get in Touch</button>
+                  <button class="option-button" onclick="showMainMenu()">Main Menu</button>
+              </div>`;
 
-              <a href="./portfolio/moosti.html" class="portfolio__link">
-                <div class="portfolio__item">
-                  <img src="assets/moosti_icon.jpg" alt="Moosti" class="portfolio__image">
-                  <div class="portfolio__info">
-                    <h3 class="portfolio__project-title">Moosti</h3>
-                  </div>
-                </div>
-              </a>
+          addBotMessage("Here are some of E7G projects:", projectsContent);
+        }, 500);
+      }
 
-              <a href="./portfolio/automated-driver-test.html" class="portfolio__link">
-                <div class="portfolio__item">
-                  <img src="assets/automated_driver_icon.jpg" alt="Automated Driving Test" class="portfolio__image">
-                  <div class="portfolio__info">
-                    <h3 class="portfolio__project-title">Automated Driving Test</h3>
-                  </div>
-                </div>
-              </a>
+      // Helper function to render project links
+      function renderProjectLinks(project) {
+        const links = [];
 
-              <a href="./portfolio/car-inspection.html" class="portfolio__link">
-                <div class="portfolio__item">
-                  <img src="assets/car_inspection_icon.jpg" alt="Car Inspection" class="portfolio__image">
-                  <div class="portfolio__info">
-                    <h3 class="portfolio__project-title">Car Inspection</h3>
-                  </div>
-                </div>
-              </a>
+        if (project.weblink) {
+          links.push(`<a href="${project.weblink}" target="_blank" class="project-link website-link">Website</a>`);
+        }
 
-            </div>
-            
-          </div>
-        </section>
+        if (project.appstore) {
+          links.push(`<a href="${project.appstore}" target="_blank" class="project-link appstore-link">App Store</a>`);
+        }
 
-        <p><b>Let’s talk about how we can bring your project to life! Whether you have a question or are ready to get started, we're here to help.</b></p>
-        <p> Get in touch: <a href="mailto:talk@erickjung.com" target="_blank" class="highlight-link">email</a> </p>
+        if (project.playstore) {
+          links.push(`<a href="${project.playstore}" target="_blank" class="project-link playstore-link">Play Store</a>`);
+        }
 
-        </br>
-    </section>
+        if (project.youtube) {
+          links.push(`<a href="${project.youtube}" target="_blank" class="project-link youtube-link">YouTube</a>`);
+        }
 
+        return links.length ? `<div class="project-links">${links.join('')}</div>` : '';
+      }
 
+      // Display contact information
+      function showContact() {
+        setTimeout(() => {
+          const contactContent = `
+                    <div class="content-block">
+                        <br>
+                        <h3>Get In Touch</h3>
+                        <p>We'd love to hear from you and discuss how we can help your business succeed.</p>
+                        <br>
+                        <p><strong>Email:</strong> ${portfolio.contact.email}</p>
+                        <p><strong>Phone:</strong> ${portfolio.contact.phone}</p>
+                        <p><strong>Address:</strong> ${portfolio.contact.address}</p>
+                        <br>
+                    </div>
+                    
+                    <div class="content-block">
+                        <button class="option-button" onclick="showMainMenu()">Main Menu</button>
+                    </div>`;
 
-  </div>
+          addBotMessage("Here's how you can reach us:", contactContent);
+        }, 500);
+      }
+
+      // Show main menu
+      window.showMainMenu = function () {
+        addUserMessage("Main Menu");
+        setTimeout(() => {
+          addBotMessage("What else would you like to know about E7G?", getMainOptions());
+        }, 500);
+      };
+
+      // Add bot message to chat
+      function addBotMessage(text, html = '') {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message bot-message';
+
+        const avatar = document.createElement('div');
+        avatar.className = 'bot-avatar';
+        avatar.textContent = 'E7G';
+
+        const content = document.createElement('div');
+        content.className = 'message-content';
+
+        if (html) {
+          content.innerHTML = `<p>${text}</p>${html}`;
+        } else {
+          content.textContent = text;
+        }
+
+        messageDiv.appendChild(avatar);
+        messageDiv.appendChild(content);
+
+        chatArea.appendChild(messageDiv);
+        chatArea.scrollTop = chatArea.scrollHeight;
+      }
+
+      // Add user message to chat
+      function addUserMessage(text) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message user-message';
+
+        const avatar = document.createElement('div');
+        avatar.className = 'user-avatar';
+        avatar.textContent = 'U';
+
+        const content = document.createElement('div');
+        content.className = 'message-content';
+        content.textContent = text;
+
+        messageDiv.appendChild(avatar);
+        messageDiv.appendChild(content);
+
+        chatArea.appendChild(messageDiv);
+        chatArea.scrollTop = chatArea.scrollHeight;
+      }
+
+      // Handle user input
+      document.getElementById('user-input').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          const text = this.value.trim();
+          if (text) {
+            addUserMessage(text);
+            this.value = '';
+            processUserInput(text);
+          }
+        }
+      });
+
+      document.getElementById('send-button').addEventListener('click', function () {
+        const input = document.getElementById('user-input');
+        const text = input.value.trim();
+        if (text) {
+          addUserMessage(text);
+          input.value = '';
+          processUserInput(text);
+        }
+      });
+
+      // Process user input
+      function processUserInput(text) {
+        const lowerText = text.toLowerCase();
+
+        if (lowerText.includes('about') || lowerText.includes('company') || lowerText.includes('who are you')) {
+          showAbout();
+        }
+        else if (lowerText.includes('service') || lowerText.includes('offer') || lowerText.includes('provide')) {
+          showServices();
+        }
+        else if (lowerText.includes('project') || lowerText.includes('work') || lowerText.includes('portfolio')) {
+          showProjects();
+        }
+        else if (lowerText.includes('contact') || lowerText.includes('reach') || lowerText.includes('email') || lowerText.includes('phone') || lowerText.includes('call')) {
+          showContact();
+        }
+        else if (lowerText.includes('menu') || lowerText.includes('option') || lowerText.includes('help')) {
+          showMainMenu();
+        }
+        else {
+          setTimeout(() => {
+            addBotMessage("I'm not sure what information you're looking for. Here are some options that might help:", getMainOptions());
+          }, 500);
+        }
+      }
+
+      // Make textarea auto-resize
+      const textarea = document.getElementById('user-input');
+      textarea.addEventListener('input', function () {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+      });
+
+      // Start the chat
+      initChat();
+    });
+  </script>
 </body>
 
 </html>
